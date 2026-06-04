@@ -17,6 +17,7 @@ import {
   Link as LinkIcon,
   Upload,
   CheckCircle2,
+  ChevronDown,
 } from "lucide-react";
 import Loader from "@/components/loader";
 
@@ -44,7 +45,16 @@ const PHOTO_BOX = { x: 168, y: 346, w: 754 - 168, h: 1064 - 346 };
 const NAME_BOX = { x: 168, y: 1066, w: 754 - 168, h: 1275 - 1066 };
 
 const PREVIEW_SCALE = 1.5;
-const EXPORT_SCALE = 4;
+
+type Quality = "low" | "medium" | "standard" | "high" | "ultra";
+
+const QUALITY_OPTIONS: { value: Quality; label: string; size: number; scale: number }[] = [
+  { value: "low", label: "Low", size: 720, scale: 720 / 1920 },
+  { value: "medium", label: "Medium", size: 1080, scale: 1080 / 1920 },
+  { value: "standard", label: "Standard · HD", size: 1920, scale: 1 },
+  { value: "high", label: "High · 4K", size: 3840, scale: 2 },
+  { value: "ultra", label: "Ultra", size: 7680, scale: 4 },
+];
 
 function renderToCanvas(
   canvas: HTMLCanvasElement,
@@ -149,6 +159,7 @@ export function Index() {
   const [template, setTemplate] = useState<HTMLImageElement | null>(null);
   const [generated, setGenerated] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
+  const [quality, setQuality] = useState<Quality>("standard");
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -177,8 +188,9 @@ export function Index() {
 
   const downloadHighRes = async () => {
     if (!template) return;
+    const option = QUALITY_OPTIONS.find((o) => o.value === quality) ?? QUALITY_OPTIONS[2];
     const off = document.createElement("canvas");
-    renderToCanvas(off, template, photo, name, EXPORT_SCALE);
+    renderToCanvas(off, template, photo, name, option.scale);
     await new Promise<void>((resolve) =>
       off.toBlob(
         (blob) => {
@@ -187,7 +199,7 @@ export function Index() {
           const a = document.createElement("a");
           a.href = url;
           const safe = (name.trim() || "primeCTF-2026").replace(/[^a-z0-9]+/gi, "-");
-          a.download = `${safe}-primeCTF-2026.png`;
+          a.download = `${safe}-primeCTF-2026-${option.size}px.png`;
           a.click();
           URL.revokeObjectURL(url);
           resolve();
@@ -426,6 +438,41 @@ export function Index() {
                     >
                       <CheckCircle2 className="h-3.5 w-3.5" />
                       DP Ready!
+                    </div>
+                    <div className="space-y-2">
+                      <label
+                        htmlFor="quality"
+                        className="text-[10px] sm:text-xs font-semibold uppercase"
+                        style={{ color: C.orange, letterSpacing: "0.15em", fontFamily: space }}
+                      >
+                        Download Quality
+                      </label>
+                      <div className="relative">
+                        <select
+                          id="quality"
+                          value={quality}
+                          onChange={(e) => setQuality(e.target.value as Quality)}
+                          className="w-full appearance-none px-3 py-3 pr-9 text-xs font-bold uppercase tracking-wide outline-none transition"
+                          style={{
+                            background: C.ice,
+                            color: C.blue,
+                            border: `1px solid ${C.blue}`,
+                            fontFamily: space,
+                            borderRadius: 0,
+                            cursor: "pointer",
+                          }}
+                        >
+                          {QUALITY_OPTIONS.map((o) => (
+                            <option key={o.value} value={o.value}>
+                              {o.label} · {o.size}×{o.size}
+                            </option>
+                          ))}
+                        </select>
+                        <ChevronDown
+                          className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4"
+                          style={{ color: C.blue }}
+                        />
+                      </div>
                     </div>
                     <div className="flex flex-row gap-2">
                       <button
