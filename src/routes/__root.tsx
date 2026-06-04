@@ -10,6 +10,7 @@ import {
 import { type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import faviconUrl from "../favicon.ico?url";
 
 function NotFoundComponent() {
   return (
@@ -80,7 +81,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     links: [
       {
         rel: "icon",
-        href: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%93%3C/text%3E%3C/svg%3E",
+        href: faviconUrl,
+        type: "image/x-icon",
       },
       {
         rel: "stylesheet",
