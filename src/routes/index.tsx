@@ -170,7 +170,7 @@ function renderToCanvas(
   }
 }
 
-function Index() {
+export function Index() {
   const [name, setName] = useState("");
   const [photo, setPhoto] = useState<HTMLImageElement | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
