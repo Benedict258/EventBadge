@@ -1,4 +1,3 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { toast } from "sonner";
 import templateUrl from "@/assets/template.jpg";
@@ -19,34 +18,6 @@ import {
   Upload,
   CheckCircle2,
 } from "lucide-react";
-
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "primeCTF 2026 — Get Your DP" },
-      {
-        name: "description",
-        content:
-          "Generate your personalized primeCTF 2026 Award Ceremony attendance DP in seconds.",
-      },
-      { property: "og:title", content: "primeCTF 2026 — Get Your DP" },
-      { property: "og:description", content: "Generate your personalized primeCTF 2026 Award Ceremony attendance DP in seconds." },
-      { property: "og:image", content: "/og-image.jpg" },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "primeCTF 2026 — Get Your DP" },
-      { name: "twitter:description", content: "Generate your personalized primeCTF 2026 Award Ceremony attendance DP in seconds." },
-      { name: "twitter:image", content: "/og-image.jpg" },
-    ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap",
-      },
-    ],
-  }),
-  component: Index,
-});
 
 // Custom X (formerly Twitter) Icon
 const XIcon = ({ className }: { className?: string }) => (
@@ -214,8 +185,7 @@ export function Index() {
           const url = URL.createObjectURL(blob);
           const a = document.createElement("a");
           a.href = url;
-          const safe =
-            (name.trim() || "primeCTF-2026").replace(/[^a-z0-9]+/gi, "-");
+          const safe = (name.trim() || "primeCTF-2026").replace(/[^a-z0-9]+/gi, "-");
           a.download = `${safe}-primeCTF-2026.png`;
           a.click();
           URL.revokeObjectURL(url);
@@ -259,10 +229,7 @@ export function Index() {
       style={{ background: C.ice, color: C.ink, fontFamily: sans }}
     >
       {/* Top bar */}
-      <div
-        className="w-full"
-        style={{ background: C.blue, color: C.white }}
-      >
+      <div className="w-full" style={{ background: C.blue, color: C.white }}>
         <div className="mx-auto max-w-6xl px-6 py-3 flex flex-col sm:flex-row items-center justify-between text-[10px] sm:text-xs gap-2 sm:gap-0">
           <span
             style={{ color: C.orange, letterSpacing: "0.15em", fontFamily: space }}
@@ -327,9 +294,8 @@ export function Index() {
               className="mt-6 max-w-2xl text-sm sm:text-base mx-auto md:mx-0"
               style={{ color: C.ink, fontFamily: space }}
             >
-              Generate your official primeCTF 2026 Award Ceremony display
-              picture. Upload a photo, type your name, and share with the
-              community.
+              Generate your official primeCTF 2026 Award Ceremony display picture. Upload a photo,
+              type your name, and share with the community.
             </p>
           </header>
 
@@ -453,7 +419,10 @@ export function Index() {
 
                 {generated && (
                   <div className="space-y-4 pt-2 border-t border-blue-100">
-                    <div className="flex items-center gap-2 justify-center text-[10px] uppercase font-bold" style={{ color: C.green, fontFamily: space }}>
+                    <div
+                      className="flex items-center gap-2 justify-center text-[10px] uppercase font-bold"
+                      style={{ color: C.green, fontFamily: space }}
+                    >
                       <CheckCircle2 className="h-3.5 w-3.5" />
                       DP Ready!
                     </div>
@@ -512,12 +481,12 @@ export function Index() {
         </div>
       </main>
 
-      <footer
-        className="w-full mt-12"
-        style={{ background: C.blue, color: C.white }}
-      >
+      <footer className="w-full mt-12" style={{ background: C.blue, color: C.white }}>
         <div className="mx-auto max-w-6xl px-6 py-8 text-[10px] sm:text-xs flex flex-col md:flex-row items-center justify-between gap-6 md:gap-2 text-center md:text-left">
-          <span style={{ color: C.orange, fontFamily: space }} className="uppercase tracking-widest font-semibold">
+          <span
+            style={{ color: C.orange, fontFamily: space }}
+            className="uppercase tracking-widest font-semibold"
+          >
             primeCTF 2026
           </span>
           <span className="opacity-80 leading-relaxed" style={{ fontFamily: space }}>
@@ -541,14 +510,12 @@ export function Index() {
           }}
         >
           <DialogHeader>
-            <DialogTitle
-              style={{ color: C.blue, fontFamily: space, fontWeight: 700 }}
-            >
+            <DialogTitle style={{ color: C.blue, fontFamily: space, fontWeight: 700 }}>
               Share Your DP
             </DialogTitle>
             <DialogDescription style={{ color: C.ink, fontFamily: space }}>
-              Your DP is live and ready to share! Let everyone know you'll be
-              at the primeCTF 2026 Award Ceremony.
+              Your DP is live and ready to share! Let everyone know you'll be at the primeCTF 2026
+              Award Ceremony.
             </DialogDescription>
           </DialogHeader>
 
