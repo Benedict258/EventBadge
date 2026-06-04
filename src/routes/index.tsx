@@ -18,6 +18,7 @@ import {
   Upload,
   CheckCircle2,
 } from "lucide-react";
+import Loader from "@/components/loader";
 
 // Custom X (formerly Twitter) Icon
 const XIcon = ({ className }: { className?: string }) => (
@@ -473,8 +474,17 @@ export function Index() {
               </div>
 
               {/* Preview — no box */}
-              <div className="w-full max-w-[460px] mx-auto md:mx-0">
-                <canvas ref={canvasRef} className="block w-full h-auto shadow-2xl" />
+              <div className="relative w-full max-w-[460px] mx-auto md:mx-0">
+                <canvas
+                  ref={canvasRef}
+                  className="block w-full h-auto shadow-2xl"
+                  style={{ visibility: template ? "visible" : "hidden" }}
+                />
+                {!template && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Loader label="Loading preview..." />
+                  </div>
+                )}
               </div>
             </div>
           </div>
